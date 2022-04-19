@@ -1,41 +1,31 @@
-# dart-barrel-file
-
-![Build](https://github.com/pastordougdev/dart-barrel-file/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
-
-## Template ToDo list
-- [x] Create a new [IntelliJ Platform Plugin Template][template] project.
-- [ ] Get familiar with the [template documentation][template].
-- [ ] Verify the [pluginGroup](/gradle.properties), [plugin ID](/src/main/resources/META-INF/plugin.xml) and [sources package](/src/main/kotlin).
-- [ ] Review the [Legal Agreements](https://plugins.jetbrains.com/docs/marketplace/legal-agreements.html).
-- [ ] [Publish a plugin manually](https://plugins.jetbrains.com/docs/intellij/publishing-plugin.html?from=IJPluginTemplate) for the first time.
-- [ ] Set the Plugin ID in the above README badges.
-- [ ] Set the [Deployment Token](https://plugins.jetbrains.com/docs/marketplace/plugin-upload.html).
-- [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
-
+# Dart Barrel File
 <!-- Plugin description -->
-This Fancy IntelliJ Platform Plugin is going to be your implementation of the brilliant ideas that you have.
+This plugin is created for those that like to create and use barrel files to ease the importing and exporting of dart files.
 
-This specific section is a source for the [plugin.xml](/src/main/resources/META-INF/plugin.xml) file which will be extracted by the [Gradle](/build.gradle.kts) during the build process.
+The plugin will generate a barrel file for all dart files in one directory.  Optionally, it will traverse the subdirectory tree to include all dart files in subdirectories.
 
-To keep everything working, do not remove `<!-- ... -->` sections. 
+A selection panel will open and present the opportunity to exclude any files from the barrel file.  
+
+## Create New Barrel File in directory:
+
+Current Directory Only:
+![Usage](img/new_barrel_file.gif)
+
+Include Subdirectories:
+![Usage](img/new_barrel_with_subs.gif)
+
+## Generated Barrel Files will have a comment header added:
+
+![ScreenShot](img/barrel-file-screenshot.png)
+
+##Update the barrel file after adding more files to the directory
+
+![Usage](img/refresh_barrel_file.gif)
+
+![Usage](img/refresh_barrel_with_subs.gif)
+
+### Under The Hood
+
+This project is build using Kotlin and makes use of IntelliJ's Gradle Plugin Template.
 <!-- Plugin description end -->
 
-## Installation
-
-- Using IDE built-in plugin system:
-  
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "dart-barrel-file"</kbd> >
-  <kbd>Install Plugin</kbd>
-  
-- Manually:
-
-  Download the [latest release](https://github.com/pastordougdev/dart-barrel-file/releases/latest) and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
-
-
----
-Plugin based on the [IntelliJ Platform Plugin Template][template].
-
-[template]: https://github.com/JetBrains/intellij-platform-plugin-template

@@ -2,9 +2,12 @@
 <idea-plugin>
     <id>pastordougdev.dartbarrelfile</id>
     <name>Dart Barrel File Generator</name>
+    <version>0.0.1</version>
     <vendor email="pastordougdev@grace4all.tech">Douglas Allen</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+
+    <idea-version since-build="183"/>
 
     <description><![CDATA[
         <p>Generate Dart Barrel files to simplify imports and exports.</p>

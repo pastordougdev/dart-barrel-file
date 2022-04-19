@@ -28,10 +28,13 @@ repositories {
 intellij {
     pluginName.set(properties("pluginName"))
     version.set(properties("platformVersion"))
+    //version.set("2020.3")
     type.set(properties("platformType"))
 
     // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
     plugins.set(properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty))
+    //plugins.set(mutableListOf("dart:203.8292"))
+    updateSinceUntilBuild.set(false)
 }
 
 // Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
