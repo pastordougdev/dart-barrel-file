@@ -1,18 +1,77 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.pastordougdev.dartbarrelfile</id>
-    <name>dart-barrel-file</name>
-    <vendor>pastordougdev</vendor>
+    <id>pastordougdev.dartbarrelfile</id>
+    <name>Dart Barrel File Generator</name>
+    <vendor email="pastordougdev@grace4all.tech">Douglas Allen</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.pastordougdev.dartbarrelfile.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.pastordougdev.dartbarrelfile.services.MyProjectService"/>
-    </extensions>
+    <description><![CDATA[
+        <p>Generate Dart Barrel files to simplify imports and exports.</p>
+        <br/>
+        <br/>
+        <p>Features:</p>
+        <ul>
+            <li>Create/Refresh Barrel File for single directory</li>
+            <li>Create/Refresh Barrel File for directory and subdirectories</li>
+        </ul>
 
-    <applicationListeners>
-        <listener class="com.github.pastordougdev.dartbarrelfile.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+        <p>Find out more on the project's <a href="https://github.com/pastordougdev/dart-barrel-file">Github page</a>.</p>
+        <br/>
+        <em>Not an official plugin.<em/>
+    ]]></description>
+
+    <change-notes><![CDATA[
+        <ul>
+            <li>v0.0.1
+                <ul>
+                    <li>First stable version released. See description for details.</li>
+                </ul>
+            </li>
+        </ul>
+    ]]>
+    </change-notes>
+
+    <actions>
+        <action id="pastordougdev.dartbarrelfile.NewBarrelFile"
+                class="pastordougdev.dartbarrelfile.actions.NewBarrelFileAction"
+                text="Dart Barrel File"
+                icon="/icons/barrel.png"
+                description="New Dart Barrel File"
+        >
+            <add-to-group group-id="NewGroup" anchor="first"/>
+        </action>
+        <action id="pastordougdev.dartbarrelfile.NewBarrelFileWithSubs"
+                class="pastordougdev.dartbarrelfile.actions.NewBarrelFileWithSubsAction"
+                text="Dart Barrel File With Subdirectories"
+                icon="/icons/barrel2.png"
+                description="New Dart Barrel File With Subs"
+        >
+            <add-to-group group-id="NewGroup" anchor="after" relative-to-action="pastordougdev.dartbarrelfile.NewBarrelFile"/>
+        </action>
+        <action id="pastordougdev.dartbarrelfile.RefreshBarrelFile"
+                class="pastordougdev.dartbarrelfile.actions.RefreshBarrelFileAction"
+                text="Refresh Dart Barrel File"
+                icon="/icons/barrel1r.png"
+                description="Refresh Dart Barrel File"
+        >
+            <add-to-group
+                    group-id="ProjectViewPopupMenu"
+                    anchor="after"
+                    relative-to-action="ProjectViewPopupMenuRefactoringGroup"
+            />
+        </action>
+        <action id="pastordougdev.dartbarrelfile.RefreshBarrelFileWithSubs"
+                class="pastordougdev.dartbarrelfile.actions.RefreshBarrelFileWithSubsAction"
+                text="Refresh Dart Barrel File With Subdirectories"
+                icon="/icons/barrel2r.png"
+                description="Refresh Dart Barrel File With Subs"
+        >
+            <add-to-group
+                    group-id="ProjectViewPopupMenu"
+                    anchor="after"
+                    relative-to-action="pastordougdev.dartbarrelfile.RefreshBarrelFile"
+            />
+        </action>
+    </actions>
 </idea-plugin>
