@@ -20,6 +20,7 @@ fun getDirName(
 }
 
 fun getAvailableFileNames(
+    project: Project,
     dataContext: DataContext
 ): List<String> {
     val view = LangDataKeys.IDE_VIEW.getData(dataContext);
@@ -29,7 +30,7 @@ fun getAvailableFileNames(
     val availableFiles = mutableListOf<String>();
     if(files != null) {
         for(file in files) {
-            if(file.name != "$dirName.dart") {
+            if(file.name != "$dirName.dart" && !isPartFile(project, file)) {
                 availableFiles.add(file.name)
             }
         }
@@ -53,7 +54,7 @@ fun getAvailableFilesWithSubdirectories(project: Project, dir: PsiDirectory, ava
     val dirName = dir.name;
     if(files != null) {
         for(file in files) {
-            if(file.name != "$dirName.dart" && file.name.endsWith(".dart") && !isPartFile(project, file)) {
+            if(file.name != "$prefix$dirName.dart" && file.name.endsWith(".dart") && !isPartFile(project, file)) {
                 availableFiles.add("$prefix${file.name}")
             }
         }

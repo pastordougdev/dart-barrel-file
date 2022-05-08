@@ -34,8 +34,6 @@ class NewBarrelFileWithSubsAction : AnAction() {
 
         val barrelFile = buildBarrelFileWithDialog(project, dirName, availableFiles)
 
-        println(barrelFile?.generateFileContents())
-
         if(barrelFile == null) return;
 
         val view = LangDataKeys.IDE_VIEW.getData(this.dataContext);

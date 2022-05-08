@@ -28,14 +28,10 @@ class NewBarrelFileAction : AnAction() {
 
         if(project == null) return
 
-        println(e.presentation.text)
-        println(e.place)
-        val availableFiles = getAvailableFileNames(this.dataContext)
+        val availableFiles = getAvailableFileNames(project, this.dataContext)
         val dirName = getDirName(this.dataContext)
 
         val barrelFile = buildBarrelFileWithDialog(project, dirName, availableFiles)
-
-        println(barrelFile?.generateFileContents())
 
         if(barrelFile == null) return;
 

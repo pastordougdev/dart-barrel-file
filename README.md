@@ -6,6 +6,9 @@ The plugin will generate a barrel file for all dart files in one directory.  Opt
 
 A selection panel will open and present the opportunity to exclude any files from the barrel file.  
 
+Visit the project Github page for more information:  https://github.com/pastordougdev/dart-barrel-file
+
+<!-- Plugin description end -->
 ## Create New Barrel File in directory:
 
 Current Directory Only:
@@ -27,5 +30,5 @@ Include Subdirectories:
 ### Under The Hood
 
 This project is build using Kotlin and makes use of IntelliJ's Gradle Plugin Template.
-<!-- Plugin description end -->
+
 

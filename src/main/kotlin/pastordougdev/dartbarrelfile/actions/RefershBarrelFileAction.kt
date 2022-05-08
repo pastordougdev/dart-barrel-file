@@ -33,19 +33,15 @@ class RefreshBarrelFileAction : AnAction() {
         val fileContents = PsiDocumentManager.getInstance(project).getDocument(psiFile)
         val header = fileContents?.getText(TextRange(0, BarrelFile.BARREL_FILE_HEADER.length));
         if (header != BarrelFile.BARREL_FILE_HEADER) {
-            println("Not Barrel File")
-            println(header)
             val notDialog = NotBarrelFileDialogDialog()
             notDialog.show()
             if (!notDialog.isOK) return
         }
 
-        val availableFiles = getAvailableFileNames(this.dataContext)
+        val availableFiles = getAvailableFileNames(project, this.dataContext)
         val dirName = getDirName(this.dataContext)
 
         val barrelFile = buildBarrelFileWithDialog(project, dirName, availableFiles)
-
-        println(barrelFile?.generateFileContents())
 
         if (barrelFile == null) return;
 
