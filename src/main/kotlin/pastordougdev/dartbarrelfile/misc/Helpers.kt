@@ -38,6 +38,26 @@ fun getAvailableFileNames(
     return availableFiles;
 }
 
+fun getAvailableFileNames(
+    project: Project,
+    dataContext: DataContext,
+    existingFileName: String
+): List<String> {
+    val view = LangDataKeys.IDE_VIEW.getData(dataContext);
+    val dir = view?.orChooseDirectory;
+    val files = dir?.files;
+    val dirName = dir?.name ?: ""
+    val availableFiles = mutableListOf<String>();
+    if(files != null) {
+        for(file in files) {
+            if(file.name != existingFileName && !isPartFile(project, file)) {
+                availableFiles.add(file.name)
+            }
+        }
+    }
+    return availableFiles;
+}
+
 fun getAvailableFilesTree(
     project: Project,
     dataContext: DataContext
@@ -45,16 +65,29 @@ fun getAvailableFilesTree(
     val availableFiles = mutableListOf<String>();
     val view = LangDataKeys.IDE_VIEW.getData(dataContext);
     val dir = view?.orChooseDirectory ?: return availableFiles;
-    getAvailableFilesWithSubdirectories(project, dir, availableFiles, "")
+    getAvailableFilesWithSubdirectories(project, dir, availableFiles, "", "$dir.name.dart")
     return availableFiles
 }
 
-fun getAvailableFilesWithSubdirectories(project: Project, dir: PsiDirectory, availableFiles: MutableList<String>, prefix: String) {
+fun getAvailableFilesTree(
+    project: Project,
+    dataContext: DataContext,
+    existingFileName: String
+): MutableList<String> {
+    val availableFiles = mutableListOf<String>();
+    val view = LangDataKeys.IDE_VIEW.getData(dataContext);
+    val dir = view?.orChooseDirectory ?: return availableFiles;
+    getAvailableFilesWithSubdirectories(project, dir, availableFiles, "", existingFileName)
+    return availableFiles
+}
+
+fun getAvailableFilesWithSubdirectories(project: Project, dir: PsiDirectory, availableFiles: MutableList<String>, prefix: String, excludedFileName: String) {
     val files = dir.files;
     val dirName = dir.name;
     if(files != null) {
         for(file in files) {
-            if(file.name != "$prefix$dirName.dart" && file.name.endsWith(".dart") && !isPartFile(project, file)) {
+            //if(file.name != "$prefix$dirName.dart" && file.name.endsWith(".dart") && !isPartFile(project, file)) {
+            if(file.name != excludedFileName && file.name.endsWith(".dart") && !isPartFile(project, file)) {
                 availableFiles.add("$prefix${file.name}")
             }
         }
@@ -67,7 +100,7 @@ fun getAvailableFilesWithSubdirectories(project: Project, dir: PsiDirectory, ava
         } else {
             "$prefix${subDir.name}/"
         }
-        getAvailableFilesWithSubdirectories(project, subDir, availableFiles, p)
+        getAvailableFilesWithSubdirectories(project, subDir, availableFiles, p, excludedFileName)
     }
 }
 

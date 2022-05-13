@@ -30,6 +30,7 @@ class RefreshBarrelFileWithSubsAction : AnAction() {
         val psiFile = e.getData(CommonDataKeys.PSI_FILE) ?: return;
         if(project == null) return
 
+        val barrelFileName = psiFile.name
         val fileContents = PsiDocumentManager.getInstance(project).getDocument(psiFile)
         val header = fileContents?.getText(TextRange(0, BarrelFile.BARREL_FILE_HEADER.length));
         if(header != BarrelFile.BARREL_FILE_HEADER) {
@@ -38,7 +39,7 @@ class RefreshBarrelFileWithSubsAction : AnAction() {
             if(!notDialog.isOK) return
         }
 
-        val availableFiles = getAvailableFilesTree(project, this.dataContext)
+        val availableFiles = getAvailableFilesTree(project, this.dataContext, barrelFileName)
         val dirName = getDirName(this.dataContext)
 
         val barrelFile = buildBarrelFileWithDialog(project, dirName, availableFiles)
