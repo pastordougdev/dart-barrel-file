@@ -17,11 +17,17 @@ class RefreshBarrelFileWithSubsAction : AnAction() {
     private lateinit var dataContext: DataContext
 
     override fun update(event: AnActionEvent) {
+        val project = event.project ?: return
+        event.presentation.isEnabledAndVisible = false
         //Shows on the ProjectViewPopupMenu only if a file is selected.
-        val psiFile = event.getData(CommonDataKeys.PSI_FILE);
-        event.presentation.isEnabledAndVisible = psiFile != null
+        val psiFile = event.getData(CommonDataKeys.PSI_FILE) ?: return
 
-        //TODO: Maybe read the file for the generated header?  Is this too much overhead for this method?
+        if(!isDartFile(psiFile)) return
+
+        //Do not show action if the file is not a barrel file
+        if(!isBarrelFile(project, psiFile)) return
+
+        event.presentation.isEnabledAndVisible = true
     }
 
     override fun actionPerformed(e: AnActionEvent) {

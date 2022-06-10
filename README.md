@@ -6,6 +6,8 @@ The plugin will generate a barrel file for all dart files in one directory.  Opt
 
 A selection panel will open and present the opportunity to exclude any files from the barrel file.  
 
+Easily add new Dart Files to an existing barrel file by right clicking in the editor or on the file in the project tree.
+
 Visit the project Github page for more information:  https://github.com/pastordougdev/dart-barrel-file
 
 <!-- Plugin description end -->
@@ -26,6 +28,8 @@ Include Subdirectories:
 ![Usage](img/refresh_barrel_file.gif)
 
 ![Usage](img/refresh_barrel_with_subs.gif)
+
+##Add individual file directly to an existing barrel file
 
 ### Under The Hood
 

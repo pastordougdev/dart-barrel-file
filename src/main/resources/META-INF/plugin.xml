@@ -2,10 +2,11 @@
 <idea-plugin>
     <id>pastordougdev.dartbarrelfile</id>
     <name>Dart Barrel File Generator</name>
-    <version>0.0.2</version>
+    <version>0.2.0</version>
     <vendor email="pastordougdev@grace4all.tech">Douglas Allen</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>Dart</depends>
 
     <idea-version since-build="183"/>
 
@@ -17,6 +18,7 @@
         <ul>
             <li>Create/Refresh Barrel File for single directory</li>
             <li>Create/Refresh Barrel File for directory and subdirectories</li>
+            <li>Add Dart File to existing generated barrel file</li>
         </ul>
 
         <p>Find out more on the project's <a href="https://github.com/pastordougdev/dart-barrel-file">Github page</a>.</p>
@@ -26,6 +28,12 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li>v0.2.0
+                <ul>
+                    <li>Right click inside editor to get option to add dart file to an existing generated barrel file.</li>
+                    <li>Right click on file in project tree to add dart file to an existing barrel file.</li>
+                </ul>
+            </li>
             <li>v0.1.0
                 <ul>
                     <li>Preserve filename when not using the default file name.</li>
@@ -48,7 +56,7 @@
         <action id="pastordougdev.dartbarrelfile.NewBarrelFile"
                 class="pastordougdev.dartbarrelfile.actions.NewBarrelFileAction"
                 text="Dart Barrel File"
-                icon="/icons/barrel.png"
+                icon="/icons/barrel1-2.png"
                 description="New Dart Barrel File"
         >
             <add-to-group group-id="NewGroup" anchor="first"/>
@@ -56,7 +64,7 @@
         <action id="pastordougdev.dartbarrelfile.NewBarrelFileWithSubs"
                 class="pastordougdev.dartbarrelfile.actions.NewBarrelFileWithSubsAction"
                 text="Dart Barrel File With Subdirectories"
-                icon="/icons/barrel2.png"
+                icon="/icons/barrel2-2.png"
                 description="New Dart Barrel File With Subs"
         >
             <add-to-group group-id="NewGroup" anchor="after" relative-to-action="pastordougdev.dartbarrelfile.NewBarrelFile"/>
@@ -64,7 +72,7 @@
         <action id="pastordougdev.dartbarrelfile.RefreshBarrelFile"
                 class="pastordougdev.dartbarrelfile.actions.RefreshBarrelFileAction"
                 text="Refresh Dart Barrel File"
-                icon="/icons/barrel1r.png"
+                icon="/icons/barrel1r-2.png"
                 description="Refresh Dart Barrel File"
         >
             <add-to-group
@@ -76,13 +84,36 @@
         <action id="pastordougdev.dartbarrelfile.RefreshBarrelFileWithSubs"
                 class="pastordougdev.dartbarrelfile.actions.RefreshBarrelFileWithSubsAction"
                 text="Refresh Dart Barrel File With Subdirectories"
-                icon="/icons/barrel2r.png"
+                icon="/icons/barrel2r-2.png"
                 description="Refresh Dart Barrel File With Subs"
         >
             <add-to-group
                     group-id="ProjectViewPopupMenu"
                     anchor="after"
                     relative-to-action="pastordougdev.dartbarrelfile.RefreshBarrelFile"
+            />
+        </action>
+        <action id="pastordougdev.dartbarrelfile.addtobarrelfile"
+                class="pastordougdev.dartbarrelfile.actions.AddToBarrelFileAction"
+                text="Add To Barrel File"
+                icon="/icons/barrel2-add.png"
+                description="Add To Barrel File"
+        >
+            <add-to-group
+                    group-id="EditorLangPopupMenu"
+                    anchor="last"
+            />
+        </action>
+        <action id="pastordougdev.dartbarrelfile.actions.AddToBarrelFileActionProjectView"
+                class="pastordougdev.dartbarrelfile.actions.AddToBarrelFileAction"
+                text="Add To Barrel File"
+                icon="/icons/barrel2-add.png"
+                description="Refresh Dart Barrel File"
+        >
+            <add-to-group
+                    group-id="ProjectViewPopupMenu"
+                    anchor="after"
+                    relative-to-action="ProjectViewPopupMenuRefactoringGroup"
             />
         </action>
     </actions>
