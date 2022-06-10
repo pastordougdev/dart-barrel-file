@@ -31,6 +31,10 @@ Include Subdirectories:
 
 ##Add individual file directly to an existing barrel file
 
+![Usage](img/add_to_barrel_editor.gif)
+
+![Usage](img/add_to_barrel_tree.gif)
+
 ### Under The Hood
 
 This project is build using Kotlin and makes use of IntelliJ's Gradle Plugin Template.

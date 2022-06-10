@@ -87,7 +87,7 @@ fun getAvailableFilesWithSubdirectories(project: Project, dir: PsiDirectory, ava
     if(files != null) {
         for(file in files) {
             //if(file.name != "$prefix$dirName.dart" && file.name.endsWith(".dart") && !isPartFile(project, file)) {
-            if(file.name != excludedFileName && file.name.endsWith(".dart") && !isPartFile(project, file)) {
+            if(file.name != excludedFileName && isDartFile(file) && !isPartFile(project, file)) {
                 availableFiles.add("$prefix${file.name}")
             }
         }
@@ -153,12 +153,13 @@ fun isBarrelFile(project: Project, file: PsiFile) : Boolean {
 fun findExistingBarrelFiles(project: Project, dir: PsiDirectory, barrelFiles: MutableList<PsiFile>) {
     val files = dir.files;
     for(file in files) {
-        if(file.name.endsWith(".dart")) {
-            val fileContents = PsiDocumentManager.getInstance(project).getDocument(file);
-            val header = fileContents?.getText(TextRange(0, BarrelFile.BARREL_FILE_HEADER.length));
-            if (header == BarrelFile.BARREL_FILE_HEADER) {
-                barrelFiles.add(file)
-            }
+        if(isDartFile(file) && isBarrelFile(project, file)) {
+            barrelFiles.add(file)
+//            val fileContents = PsiDocumentManager.getInstance(project).getDocument(file);
+//            val header = fileContents?.getText(TextRange(0, BarrelFile.BARREL_FILE_HEADER.length));
+//            if (header == BarrelFile.BARREL_FILE_HEADER) {
+//                barrelFiles.add(file)
+//            }
         }
     }
 

@@ -9,10 +9,7 @@ import com.intellij.psi.PsiFile
 import pastordougdev.dartbarrelfile.dialog.AlreadyInBarrelFileDialog
 import pastordougdev.dartbarrelfile.dialog.NoBarrelFileFoundDialog
 import pastordougdev.dartbarrelfile.dialog.SelectBarrelFileDialog
-import pastordougdev.dartbarrelfile.misc.addDartFileToBarrelFile
-import pastordougdev.dartbarrelfile.misc.findExistingBarrelFiles
-import pastordougdev.dartbarrelfile.misc.isInBarrelFile
-import pastordougdev.dartbarrelfile.misc.isPartFile
+import pastordougdev.dartbarrelfile.misc.*
 
 class AddToBarrelFileAction : AnAction() {
 
@@ -29,7 +26,7 @@ class AddToBarrelFileAction : AnAction() {
         }
         val n = psiFile.name
         print(" -- filename is $n")
-        if(!n.endsWith(".dart")) {
+        if(!isDartFile(psiFile)) {
             return
         }
 
