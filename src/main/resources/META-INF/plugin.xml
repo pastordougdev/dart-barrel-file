@@ -2,7 +2,7 @@
 <idea-plugin>
     <id>pastordougdev.dartbarrelfile</id>
     <name>Dart Barrel File Generator</name>
-    <version>0.2.0</version>
+    <version>0.2.1</version>
     <vendor email="pastordougdev@grace4all.tech">Douglas Allen</vendor>
 
     <depends>com.intellij.modules.platform</depends>
@@ -28,6 +28,11 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li>v0.2.1
+                <ul>
+                    <li>Updated for 2022 releases</li>
+                </ul>
+            </li>
             <li>v0.2.0
                 <ul>
                     <li>Right click inside editor to get option to add dart file to an existing generated barrel file.</li>
