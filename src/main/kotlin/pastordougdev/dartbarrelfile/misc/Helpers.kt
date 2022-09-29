@@ -176,7 +176,13 @@ fun isInBarrelFile(project: Project, dartFile: PsiFile, barrelFiles: MutableList
         val fileText = fileContents?.text
         if(fileText != null) {
             if(fileText.contains(dartFile.name)) {
-                inBarrelFiles.add(file)
+                val idx = fileText.indexOf(dartFile.name)
+                if(idx > 0) {
+                    if(fileText[idx - 1] == '\'' || fileText[idx - 1] == '/') {
+                        inBarrelFiles.add(file)
+                    }
+                }
+                //inBarrelFiles.add(file)
             }
         }
 

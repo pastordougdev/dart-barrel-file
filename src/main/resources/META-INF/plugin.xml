@@ -28,6 +28,11 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li>v0.2.2
+                <ul>
+                    <li>Corrected a bug where a file is erroneously identified as already existing in a barrel file.</li>
+                </ul>
+            </li>
             <li>v0.2.1
                 <ul>
                     <li>Updated for 2022 releases</li>
