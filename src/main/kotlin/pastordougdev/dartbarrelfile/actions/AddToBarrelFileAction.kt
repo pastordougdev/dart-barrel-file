@@ -48,7 +48,7 @@ class AddToBarrelFileAction : AnAction() {
         val dartFileName = psiFile.name;
         val dir = psiFile.containingDirectory;
 
-        findExistingBarrelFiles(project, dir, barrelFiles)
+        findExistingBarrelFiles(project, dir, barrelFiles, psiFile)
 
         //Were any barrel files found?
         if(barrelFiles.isEmpty()) {

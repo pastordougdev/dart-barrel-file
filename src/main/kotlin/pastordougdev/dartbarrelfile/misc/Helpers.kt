@@ -120,7 +120,7 @@ fun buildBarrelFileWithDialog(
 
 fun createBarrelFile(project: Project, dir: PsiDirectory, barrelFile: BarrelFile) {
     val existingFile = dir.findFile(barrelFile.barrelFileName)
-    val barrelContents = barrelFile.generateFileContents()
+    val barrelContents = sortBarrelFile(barrelFile.generateFileContents())
     val fileType = FileTypeManager.getInstance().getFileTypeByFileName(barrelFile.barrelFileName)
     if(existingFile != null) {
         val document = PsiDocumentManager.getInstance(project).getDocument(existingFile)
@@ -150,10 +150,10 @@ fun isBarrelFile(project: Project, file: PsiFile) : Boolean {
     return header == BarrelFile.BARREL_FILE_HEADER
 }
 
-fun findExistingBarrelFiles(project: Project, dir: PsiDirectory, barrelFiles: MutableList<PsiFile>) {
+fun findExistingBarrelFiles(project: Project, dir: PsiDirectory, barrelFiles: MutableList<PsiFile>, targetFile: PsiFile) {
     val files = dir.files;
     for(file in files) {
-        if(isDartFile(file) && isBarrelFile(project, file)) {
+        if(isDartFile(file) && isBarrelFile(project, file) && !file.isEquivalentTo(targetFile)) {
             barrelFiles.add(file)
 //            val fileContents = PsiDocumentManager.getInstance(project).getDocument(file);
 //            val header = fileContents?.getText(TextRange(0, BarrelFile.BARREL_FILE_HEADER.length));
@@ -166,7 +166,7 @@ fun findExistingBarrelFiles(project: Project, dir: PsiDirectory, barrelFiles: Mu
     if(dir.name == "lib") return
     val nextDir = dir.parentDirectory ?: return
     //if(nextDir.name == "lib") return
-    findExistingBarrelFiles(project, nextDir, barrelFiles)
+    findExistingBarrelFiles(project, nextDir, barrelFiles, targetFile)
 }
 
 fun isInBarrelFile(project: Project, dartFile: PsiFile, barrelFiles: MutableList<PsiFile>) : MutableList<PsiFile> {
@@ -212,13 +212,47 @@ fun addDartFileToBarrelFile(project: Project, fileToAdd: PsiFile, barrelFile: Ps
 
     val barrelFileDoc = PsiDocumentManager.getInstance(project).getDocument(barrelFile);
     if(barrelFileDoc != null) {
+        val c = barrelFileDoc.text
+        val updatedBarrelFileContents = c + exportStatement.toString()
+        val sortedBarrelFile = sortBarrelFile(updatedBarrelFileContents)
         val fileLen = barrelFileDoc.textLength
-
         WriteCommandAction.runWriteCommandAction(project) {
-            barrelFileDoc.insertString(fileLen, exportStatement.toString())
+            barrelFileDoc.replaceString(0, fileLen - 1, sortedBarrelFile)
         }
     }
 
+}
+
+fun sortBarrelFile(barrelFileContents: String) : String {
+    val sortedBarrelFile = StringBuilder()
+    val files = mutableListOf<Pair<String, String>>()
+    val lines = barrelFileContents.split('\n');
+    for (line in lines) {
+        if(line.length > 1 && line.substring(0, 2) == "//") {
+            sortedBarrelFile.append(line + "\n")
+        } else {
+            val idx = line.indexOf(".dart")
+            if(idx >= 0) {
+                var startIdx = 0
+                var fileNameLen = 5
+                for(i in idx - 1 downTo 0) {
+                    if(line[i] != '\'' && line[i] != '/') {
+                        startIdx = i
+                        fileNameLen++
+                    } else {
+                        break
+                    }
+                }
+                files.add(Pair(line.substring(startIdx, startIdx + fileNameLen), line))
+            }
+        }
+    }
+    files.sortWith(Comparator{a, b -> a.first.compareTo(b.first)})
+    for (file in files) {
+        sortedBarrelFile.append(file.second + "\n")
+    }
+    println(sortedBarrelFile.toString())
+    return sortedBarrelFile.toString();
 }
 
 fun buildExportPath(project: Project, currentDir: PsiDirectory, targetDir: PsiDirectory, exportPath: StringBuilder) {
