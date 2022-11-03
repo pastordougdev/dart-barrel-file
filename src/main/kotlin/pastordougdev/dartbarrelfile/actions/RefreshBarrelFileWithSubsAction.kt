@@ -45,15 +45,45 @@ class RefreshBarrelFileWithSubsAction : AnAction() {
             if(!notDialog.isOK) return
         }
 
+        val view = LangDataKeys.IDE_VIEW.getData(this.dataContext);
+        val dir = view?.orChooseDirectory ?: return
+
+        //0.4.0 Functionality - if a dart file is found in another generated
+        //barrel file, exclude it from the candidates to put in the
+        //new barrel file.  UNLESS it is a file already being exported by this
+        //barrel file.  In this case, it needs to be listed otherwise it will be
+        //wiped out on the refresh.
+
+        //Create a list of all exported *.dart file names in this project.
+        val exportedFiles = filesAlreadyInBarrelFiles(project, dir)
+
+        //Create a list of previously exported files IN THIS BARREL FILE
+
+        val exportedByThisBarrelFile = getExportedDartFileNames(project, psiFile)
+        println("In this barrel file: $exportedByThisBarrelFile")
+
+        //This regex matches *.dart the is preceded by a single quote or slah
+        val dartRegex = Regex("['|\\/]([\\w_]*\\.dart)")
+
         val availableFiles = getAvailableFilesTree(project, this.dataContext, barrelFileName)
+        //Remove any file name that is already exported in another barrel file.
+        availableFiles.removeIf {
+            val matchResult = dartRegex.find(it)
+            if (matchResult == null) {
+                return@removeIf false
+            } else {
+                return@removeIf exportedFiles.contains(matchResult.groups[1]!!.value) &&
+                        !exportedByThisBarrelFile.contains(matchResult.groups[1]!!.value)
+            }
+        }
+
         val dirName = getDirName(this.dataContext)
 
         val barrelFile = buildBarrelFileWithDialog(project, dirName, availableFiles)
 
         if(barrelFile == null) return;
 
-        val view = LangDataKeys.IDE_VIEW.getData(this.dataContext);
-        val dir = view?.orChooseDirectory;
+
         ApplicationManager.getApplication().runWriteAction {
             CommandProcessor.getInstance().executeCommand(
                 project,

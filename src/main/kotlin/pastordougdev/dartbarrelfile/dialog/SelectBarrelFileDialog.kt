@@ -26,7 +26,6 @@ class SelectBarrelFileDialog (project: Project, private val barrelFiles: List<Ps
         )
 
 
-
         barrelFilesNamesList = JBList(barrelFilesCollection).apply{
             cellRenderer = DefaultPsiElementCellRenderer()
             setSelectionMode(0)

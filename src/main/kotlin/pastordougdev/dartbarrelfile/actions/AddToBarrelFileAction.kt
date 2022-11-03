@@ -19,13 +19,11 @@ class AddToBarrelFileAction : AnAction() {
 
         event.presentation.isEnabledAndVisible = false
 
-        print("Trying to show Add to Action")
         val psiFile = event.getData(CommonDataKeys.PSI_FILE);
         if(psiFile == null) {
             return;
         }
         val n = psiFile.name
-        print(" -- filename is $n")
         if(!isDartFile(psiFile)) {
             return
         }

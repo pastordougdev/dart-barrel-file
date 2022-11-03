@@ -48,7 +48,8 @@ class BarrelDialog (
 
         barrelLabel = JLabel("Barrel File Name")
         barrelFileName = JTextField(40)
-        barrelFileName.text = dirName
+        //if the barrel file is being created in lib folder, default barrel file name to 'imports'
+        barrelFileName.text = if(dirName != "lib") dirName else "imports"
         init()
     }
     override fun createCenterPanel(): JComponent? {
