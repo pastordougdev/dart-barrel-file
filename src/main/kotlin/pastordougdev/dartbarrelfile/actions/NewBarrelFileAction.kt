@@ -7,10 +7,13 @@ import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.command.CommandProcessor
-import pastordougdev.dartbarrelfile.misc.buildBarrelFileWithDialog
-import pastordougdev.dartbarrelfile.misc.createBarrelFile
-import pastordougdev.dartbarrelfile.misc.getAvailableFileNames
-import pastordougdev.dartbarrelfile.misc.getDirName
+import com.intellij.openapi.ui.Messages
+import com.intellij.psi.PsiDocumentManager
+import com.intellij.psi.PsiFile
+import pastordougdev.dartbarrelfile.dialog.AlreadyInBarrelFileDialog
+import pastordougdev.dartbarrelfile.dialog.NoBarrelFileFoundDialog
+import pastordougdev.dartbarrelfile.dialog.SelectBarrelFileDialog
+import pastordougdev.dartbarrelfile.misc.*
 
 class NewBarrelFileAction : AnAction() {
 
@@ -47,6 +50,19 @@ class NewBarrelFileAction : AnAction() {
                 null
             )
         }
+
+        //0.5.0 Functionality - if other barrel files exist up the directory tree, ask
+        //the user to go ahead and add this new barrel file to one of those existing
+        //higher barrel files.
+
+        //Would you like to add this new file to a higher barrel file?
+
+        val justCreated = dir!!.findFile(barrelFile.barrelFileName)
+
+        val addToHigherBarrelFile = autoAddToHigherBarrelFile(project, justCreated!!)
+        if(!addToHigherBarrelFile) return
+
+        addToExistingBarrelFileFlow(project, justCreated!!)
 
     }
 }

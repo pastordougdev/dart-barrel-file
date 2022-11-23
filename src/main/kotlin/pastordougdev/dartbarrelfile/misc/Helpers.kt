@@ -84,6 +84,7 @@ fun getAvailableFilesTree(
 fun getAvailableFilesWithSubdirectories(project: Project, dir: PsiDirectory, availableFiles: MutableList<String>, prefix: String, excludedFileName: String) {
     val files = dir.files;
     val dirName = dir.name;
+    println("Get Available Files With Sub $dirName")
     if(files != null) {
         for(file in files) {
             //if(file.name != "$prefix$dirName.dart" && file.name.endsWith(".dart") && !isPartFile(project, file)) {
@@ -251,7 +252,6 @@ fun sortBarrelFile(barrelFileContents: String) : String {
     for (file in files) {
         sortedBarrelFile.append(file.second + "\n")
     }
-    println(sortedBarrelFile.toString())
     return sortedBarrelFile.toString();
 }
 

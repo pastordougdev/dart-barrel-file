@@ -2,7 +2,7 @@
 <idea-plugin>
     <id>pastordougdev.dartbarrelfile</id>
     <name>Dart Barrel File Generator</name>
-    <version>0.4.0</version>
+    <version>0.5.0</version>
     <vendor email="pastordougdev@grace4all.tech">Douglas Allen</vendor>
 
     <depends>com.intellij.modules.platform</depends>
@@ -28,6 +28,17 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li>v0.5.1
+                <ul>
+                    <li>Correct an issue where the plugin becomes unresponsive when generating
+                    barrel file with subdirectories.
+                </ul>
+            </li>
+            <li>v0.5.0
+                <ul>
+                    <li>When creating a new barrel file, if barrel files exist up the directory tree, prompt the user about adding to one of those existing files
+                </ul>
+            </li>
             <li>v0.4.0
                 <ul>
                     <li>When creating a new barrel files with subdirectories, dart files already exported in one barrel file do not appear as candidates for the new barrel file</li>
@@ -38,7 +49,8 @@
                 <ul>
                     <li>export statements are sorted alphabetically by the *.dart file name</li>
                 </ul>
-            </li><li>v0.2.2
+            </li>
+            <li>v0.2.2
                 <ul>
                     <li>Corrected a bug where a file is erroneously identified as already existing in a barrel file.</li>
                 </ul>

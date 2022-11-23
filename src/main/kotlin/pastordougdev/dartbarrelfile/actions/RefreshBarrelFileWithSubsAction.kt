@@ -60,7 +60,7 @@ class RefreshBarrelFileWithSubsAction : AnAction() {
         //Create a list of previously exported files IN THIS BARREL FILE
 
         val exportedByThisBarrelFile = getExportedDartFileNames(project, psiFile)
-        println("In this barrel file: $exportedByThisBarrelFile")
+        //println("In this barrel file: $exportedByThisBarrelFile")
 
         //This regex matches *.dart the is preceded by a single quote or slah
         val dartRegex = Regex("['|\\/]([\\w_]*\\.dart)")

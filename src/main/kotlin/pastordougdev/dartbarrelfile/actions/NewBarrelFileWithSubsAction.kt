@@ -35,7 +35,6 @@ class NewBarrelFileWithSubsAction : AnAction() {
 
         //Create a list of all exported *.dart file names in this project.
         val exportedFiles = filesAlreadyInBarrelFiles(project, dir)
-
         //This regex matches *.dart the is preceded by a single quote or slah
         val dartRegex = Regex("['|\\/]([\\w_]*\\.dart)")
         val availableFiles = getAvailableFilesTree(project, this.dataContext)
@@ -55,8 +54,6 @@ class NewBarrelFileWithSubsAction : AnAction() {
 
         if(barrelFile == null) return;
 
-//        val view = LangDataKeys.IDE_VIEW.getData(this.dataContext);
-//        val dir = view?.orChooseDirectory;
         ApplicationManager.getApplication().runWriteAction {
             CommandProcessor.getInstance().executeCommand(
                 project,
@@ -67,6 +64,18 @@ class NewBarrelFileWithSubsAction : AnAction() {
                 null
             )
         }
+        //0.5.0 Functionality - if other barrel files exist up the directory tree, ask
+        //the user to go ahead and add this new barrel file to one of those existing
+        //higher barrel files.
+
+        //Would you like to add this new file to a higher barrel file?
+
+        val justCreated = dir!!.findFile(barrelFile.barrelFileName)
+
+        val addToHigherBarrelFile = autoAddToHigherBarrelFile(project, justCreated!!)
+        if(!addToHigherBarrelFile) return
+
+        addToExistingBarrelFileFlow(project, justCreated!!)
 
     }
 }

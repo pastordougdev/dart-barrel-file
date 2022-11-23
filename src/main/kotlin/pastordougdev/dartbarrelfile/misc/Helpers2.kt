@@ -8,7 +8,6 @@ fun filesAlreadyInBarrelFiles(project: Project, dir: PsiDirectory): MutableList<
     val exportedFileNames = mutableListOf<String>()
     val dartRegex = Regex("['|\\/]([\\w_]*\\.dart)")
     val libDir = getLibDirectory(project, dir) ?: return mutableListOf<String>()
-
     val barrelFiles = getAllBarrelFiles(project, libDir)
     for(bf in barrelFiles) {
         val document = PsiDocumentManager.getInstance(project).getDocument(bf)
@@ -31,14 +30,18 @@ fun filesAlreadyInBarrelFiles(project: Project, dir: PsiDirectory): MutableList<
 }
 
 fun getLibDirectory(project: Project, dir: PsiDirectory) : PsiDirectory? {
+    println("Looking for lib director")
     if(dir.name == "lib") return dir
     var found = false
+    var currDir = dir
     var dirFound: PsiDirectory? = null
     while(!found) {
-        val nextDirUp = dir.parentDirectory ?: break
+        val nextDirUp = currDir.parentDirectory ?: break
         if(nextDirUp.name == "lib") {
             dirFound = nextDirUp
             found = true
+        } else {
+            currDir = nextDirUp
         }
     }
 
