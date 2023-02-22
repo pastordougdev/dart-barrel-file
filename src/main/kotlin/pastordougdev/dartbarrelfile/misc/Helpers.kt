@@ -248,7 +248,10 @@ fun sortBarrelFile(barrelFileContents: String) : String {
             }
         }
     }
-    files.sortWith(Comparator{a, b -> a.first.compareTo(b.first)})
+    //files.sortWith(Comparator{a, b -> a.first.compareTo(b.first)})
+    //0.5.3 - instead of just sorting on the dart file name, sort on the entire
+    //line.  This satisfies the directives_ordering dart linting rule.
+    files.sortWith(Comparator{a, b -> a.second.compareTo(b.second)})
     for (file in files) {
         sortedBarrelFile.append(file.second + "\n")
     }

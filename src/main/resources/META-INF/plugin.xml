@@ -2,7 +2,7 @@
 <idea-plugin>
     <id>pastordougdev.dartbarrelfile</id>
     <name>Dart Barrel File Generator</name>
-    <version>0.5.0</version>
+    <version>0.5.3</version>
     <vendor email="pastordougdev@grace4all.tech">Douglas Allen</vendor>
 
     <depends>com.intellij.modules.platform</depends>
@@ -28,6 +28,15 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li>v0.5.3
+                <ul>
+                    <li>Enhance barrel file sorting to comply with directives_ordering dart linting rule</li>
+                 </ul>
+            </li><li>v0.5.2
+                <ul>
+                    <li>Bump release until boundary</li>
+                 </ul>
+            </li>
             <li>v0.5.1
                 <ul>
                     <li>Correct an issue where the plugin becomes unresponsive when generating
